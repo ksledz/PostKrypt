@@ -1,2 +1,3 @@
+import TestTransform
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = mainXD
