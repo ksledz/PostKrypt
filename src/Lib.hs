@@ -1,7 +1,6 @@
 module Lib where
 
 import           Data.Fixed
--- typ R objaśniony w tekście poniżej
 import           Mon
 
 type R = Rational
@@ -10,15 +9,12 @@ type R2 = (R, R)
 
 newtype Point =
   Point R2
-  deriving (Eq, Show) -- punkt 2D
+  deriving (Eq, Show)
 
 newtype Vec =
   Vec R2
-  deriving (Eq, Show) -- wektor 2D
+  deriving (Eq, Show)
 
---instance Eq Vec
---instance Eq Point
---instance Show Vec
 point :: R2 -> Point
 point = Point
 
@@ -29,10 +25,6 @@ instance Mon Vec where
   m1 = Vec (0, 0)
   Vec (x, y) >< Vec (z, t) = Vec (x + z, y + t)
 
---opcja1
-type Path = [R2]
-
---opcja2
 type Line = (R2, R2)
 
 newtype Picture =
@@ -104,14 +96,13 @@ instance Mon Transform where
   m1 = Transform []
   Transform x >< Transform y = Transform $ simplify (x ++ y)
 
-
+-- Bhaskara's sine approximation
+sinR :: R -> R
+sinR x = 4 * x * (180 - x)/(40500 - x * (180 - x))
 
 cosR :: R -> R
-
-sinR :: R -> R
-
-sinR x = 4*x*(180-x)/(40500-x*(180-x))
 cosR x = sinR (90 + x)
+
 singletrR2 :: SingleTransform -> R2 -> R2
 singletrR2 (Rotation r) (x,y) = let
              c = cosR r
@@ -123,7 +114,8 @@ singletrpoint :: SingleTransform -> Point -> Point
 singletrpoint r (Point p) = Point $ singletrR2 r p
 
 singletrvec :: SingleTransform -> Vec -> Vec
-singletrvec r (Vec p) = Vec $ singletrR2 r p
+singletrvec (Rotation r) (Vec p) = Vec $ singletrR2 (Rotation r) p
+singletrvec t p                  = p -- wektor nie podlega translacji!
 
 trpoint :: Transform -> Point -> Point
 trpoint (Transform t) p = foldl (flip singletrpoint) p t
