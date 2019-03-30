@@ -1,3 +1,4 @@
+-- by Kamila Śledź, ks386105
 module Main where
 
 import Control.Monad
