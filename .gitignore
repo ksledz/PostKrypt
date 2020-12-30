@@ -1,3 +1,8 @@
-.stack-work/
-PostKrypt.cabal
-*~
+*.hi
+*.o
+*.bc
+TestTransform
+postkrypt_converter
+*.bak
+*.pdf
+ks386105.tar.gz

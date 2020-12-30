@@ -1,4 +1,4 @@
-module TestTransform(mainXD) where
+module Main(main) where
 import Lib
 import Test.QuickCheck hiding((><))
 import Control.Monad(liftM, liftM2)
@@ -38,7 +38,7 @@ testVecAssoc a b c = (a >< b) >< c === a >< (b >< c)
 
 writeln = putStrLn
 
-mainXD = do
+main = do
   writeln ""
   writeln "composition leftUnit"
   quickCheck testLeftUnit
